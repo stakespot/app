@@ -10,44 +10,43 @@ import {
   Image,
 } from "@chakra-ui/react";
 import Head from 'next/head';
-import { useEffect, useRef, useState } from 'react';
+import { NAVBAR_HEIGHT } from '@/components/shared/Navbar';
+import { useState, useEffect, useRef } from 'react';
 
 export default function Home() {
-  const [navbarHeight, setNavbarHeight] = useState(0);
-  const navbarRef = useRef<HTMLDivElement>(null);
+  const [height, setHeight] = useState<number>(NAVBAR_HEIGHT); // Default to NAVBAR_HEIGHT
+  const connectButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    const updateNavbarHeight = () => {
-      if (navbarRef.current) {
-        setNavbarHeight(navbarRef.current.offsetTop + 1); // Add a small buffer
-      }
+    const handleConnectButtonClick = () => {
+      setHeight(NAVBAR_HEIGHT);
     };
 
-    updateNavbarHeight(); // Set initial height
-    window.addEventListener('resize', updateNavbarHeight); // Update height on resize
+    if (connectButtonRef.current) {
+      connectButtonRef.current.addEventListener('click', handleConnectButtonClick);
+    }
 
     return () => {
-      window.removeEventListener('resize', updateNavbarHeight);
+      if (connectButtonRef.current) {
+        connectButtonRef.current.removeEventListener('click', handleConnectButtonClick);
+      }
     };
-  }, []);
+  }, [connectButtonRef.current]);
 
   return (
     <>
       <Head>
         <title>StakeSpot - Home</title>
       </Head>
-      <Box ref={navbarRef} width="100%" background="white" boxShadow="md">
-        {/* Your Navbar content here */}
-      </Box>
       <Box
         width="100vw"
-        height={`calc(100vh - ${navbarHeight}px)`}
+        height={`calc(100vh - ${height}px)`}
         background="linear-gradient(180deg, #ffffff 0%, #ffa004 100%)"
         display="flex"
         justifyContent="center"
         alignItems="center"
-        overflow="hidden" // Prevent overflow
-        position="relative" // Added position relative to parent box
+        overflow="hidden"
+        position="relative"
       >
         <Box
           width="100%"
@@ -57,8 +56,8 @@ export default function Home() {
           background="#FFFFFF"
           borderRadius="20px"
           boxShadow="lg"
-          position="relative" // Added position relative to child box
-          zIndex="1" // Ensure the box is below the images
+          position="relative"
+          zIndex="1"
         >
           <Stack
             width="100%"
@@ -108,8 +107,8 @@ export default function Home() {
                   size="lg"
                   backgroundColor="#0008FF"
                   color="#FFFFFF"
-                  height="43px" // Added height
-                  width="134px" // Added width
+                  height="43px"
+                  width="134px"
                   borderRadius="10px"
                 >
                   <Text
@@ -129,9 +128,10 @@ export default function Home() {
                   borderColor="#0008FF"
                   backgroundColor="#E0E1FF"
                   color="#0008FF"
-                  height="43px" // Added height
-                  width="134px" // Added width
+                  height="43px"
+                  width="134px"
                   borderRadius="10px"
+                  ref={connectButtonRef}
                 >
                   <Text
                     fontWeight="bold"
@@ -153,9 +153,9 @@ export default function Home() {
           left="0"
           top="50%"
           transform="translateY(-50%)"
-          maxWidth={{ base: "150px", md: "200px", lg: "250px" }} // Responsive sizes
-          zIndex="2" // Bring image in front of the box
-          display={{ base: "none", md: "block" }} // Hide on mobile
+          maxWidth={{ base: "150px", md: "200px", lg: "250px" }}
+          zIndex="2"
+          display={{ base: "none", md: "block" }}
         />
         <Image
           src="/capyyes.svg"
@@ -163,9 +163,9 @@ export default function Home() {
           position="absolute"
           right="0"
           bottom="0"
-          maxWidth={{ base: "150px", md: "200px", lg: "250px" }} // Responsive sizes
-          zIndex="2" // Bring image in front of the box
-          display={{ base: "none", md: "block" }} // Hide on mobile
+          maxWidth={{ base: "150px", md: "200px", lg: "250px" }}
+          zIndex="2"
+          display={{ base: "none", md: "block" }}
         />
       </Box>
     </>

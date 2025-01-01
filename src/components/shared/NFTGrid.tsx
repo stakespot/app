@@ -51,9 +51,8 @@ export function NFTGrid({ nfts, selectedNFTs, toggleNFTSelection, isUnstake = fa
                         </Box>
                     ))
                 ) : (
-                    <VStack color="teal.600">
-                        <Spinner color="colorPalette.600" borderWidth="6px" size="lg" />
-                        <Text color="colorPalette.600">Loading NFT Collection...</Text>
+                    <VStack color="#0008FF">
+                        <Text color="#0008FF">No NFTs</Text>
                     </VStack>
                 )}
             </SimpleGrid>

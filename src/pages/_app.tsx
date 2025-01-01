@@ -5,6 +5,7 @@ import { Navbar } from '@/components/shared/Navbar';
 import { AutoConnect } from 'thirdweb/react';
 import { client } from '@/consts/client';
 import { createWallet, inAppWallet } from 'thirdweb/wallets';
+import { NavbarHeightProvider } from '@/components/shared/NavbarHeightContext';
 
 const wallets = [
     inAppWallet(),
